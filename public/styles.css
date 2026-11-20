@@ -278,16 +278,83 @@ dialog::backdrop { background: #0e2e30a1; }
 .experience-nav nav { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
 .experience-nav nav > a { font-weight: 650; text-decoration: none; }
 .experience main { max-width: 1100px; width: 90%; margin-inline: auto; }
-.experience-hero { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 24px; padding-block: clamp(48px, 9vw, 104px); }
-.experience-hero h1 { font-size: clamp(2.8rem, 6.8vw, 6.5rem); line-height: .99; color: #133a34; }
+.official-logo { display: block; width: 100%; height: auto; }
+.experience-nav .official-logo { width: 162px; }
+.experience-hero {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+  padding-block: clamp(40px, 6vw, 85px);
+}
+.experience-hero h1 { font-size: clamp(2.8rem, 5.7vw, 5.5rem); line-height: .99; color: #133a34; }
 .eyebrow { color: var(--teal); font-size: .88rem; font-weight: 750; margin-bottom: 11px; }
 .experience-hero p:not(.eyebrow) { max-width: 48ch; font-size: 1.12rem; color: var(--muted); line-height: 1.6; margin: 19px 0; }
-.journey-art { background: linear-gradient(145deg, #f3fbfe, #deeff7); border-radius: 21px; aspect-ratio: 1.12; position: relative; overflow: hidden; }
-.orbit { position: absolute; border: 1px solid #6292a3; border-radius: 50%; width: 78%; height: 43%; inset: 29% 11%; transform: rotate(var(--rotation)); }
-.orbit-one { --rotation: -30deg; }
-.orbit-two { --rotation: 30deg; }
-.orbit-three { --rotation: 90deg; }
-.orb { width: 27%; aspect-ratio: 1; position: absolute; inset: 35% auto auto 36.5%; border-radius: 50%; background: radial-gradient(circle at 36% 30%, #f7fcff, #c3e6f1 65%, #9bc7d8); box-shadow: 0 10px 25px #37758b26; }
+.journey-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1.12;
+  width: 100%;
+  max-width: 565px;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: radial-gradient(circle, #e0f2f1 0%, #eaf6fb 36%, transparent 72%);
+}
+.journey-ring {
+  position: absolute;
+  width: 72%;
+  aspect-ratio: 1;
+  border: 1px solid #b8dfe9;
+  border-top-color: #509eb0;
+  border-right-color: #509eb0;
+  border-radius: 50%;
+  transform: rotate(21deg);
+  box-shadow: 0 0 32px #a2d3e11f;
+}
+.journey-center, .journey-node {
+  z-index: 1;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 22px #245a7010;
+}
+.journey-center {
+  width: 44%;
+  padding: clamp(10px, 1.6vw, 19px);
+  border-radius: 16px;
+  text-align: center;
+}
+.journey-center span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: .81rem;
+  font-weight: 650;
+}
+.journey-nodes { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; }
+.journey-node {
+  position: absolute;
+  min-width: 0;
+  padding: 8px 12px;
+  border-radius: 14px;
+  text-align: center;
+}
+.journey-node strong { display: block; font-size: .89rem; color: #154d60; }
+.journey-node span { display: block; font-size: .82rem; color: var(--muted); }
+.journey-node:nth-child(1) { top: 4%; left: 50%; transform: translateX(-50%); }
+.journey-node:nth-child(2) { top: 50%; right: 0; max-width: 27%; transform: translateY(-50%); }
+.journey-node:nth-child(3) { bottom: 4%; left: 50%; transform: translateX(-50%); }
+.journey-node:nth-child(4) { top: 50%; left: 0; max-width: 27%; transform: translateY(-50%); }
+@media (max-width: 960px) {
+  .experience-hero { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) {
+  .journey-art { aspect-ratio: auto; gap: 14px; padding: 40px 12px 12px; }
+  .journey-ring { top: 3px; left: 50%; width: 172px; transform: translateX(-50%) rotate(21deg); }
+  .journey-center { width: min(76%, 230px); padding: 14px; }
+  .journey-nodes { position: relative; inset: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
+  .journey-nodes .journey-node { position: relative; inset: auto; max-width: none; transform: none; padding: 7px 5px; }
+}
 .experience-section { padding-block: 26px; }
 .experience-section h2 { font-size: clamp(1.65rem, 4vw, 2.4rem); margin-bottom: 14px; }
 .journey-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
@@ -323,7 +390,6 @@ dialog::backdrop { background: #0e2e30a1; }
   .metric .metric-icon { display: none; }
   .welcome { align-items: start; flex-direction: column; }
   .experience-hero, .journey-steps { grid-template-columns: 1fr; }
-  .journey-art { width: min(100%, 360px); }
 }
 @media (max-width: 480px) {
   .topbar .profile { display: none; }

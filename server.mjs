@@ -18,6 +18,7 @@ const pages = new Map([
   ['/app.js', ['app.js', 'text/javascript']],
   ['/persona.js', ['persona.js', 'text/javascript']],
   ['/favicon.ico', ['favicon.ico', 'image/x-icon']],
+  ['/vitairos-m-logo.png', ['vitairos-m-logo.png', 'image/png']],
 ]);
 const port = Number(process.env.PORT ?? 4173);
 
