@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Espacio personal de prueba de VITAIROS-M.">
+  <title>Mi espacio · VITAIROS-M</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/persona.js"></script>
+</head>
+<body>
+  <a class="skip" href="#principal">Saltar al contenido</a>
+  <div class="workspace personal">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="VITAIROS-M, inicio">
+      <img class="official-logo" src="/vitairos-m-logo.png" width="574" height="166" alt="VITAIROS-M · Salud mental digital">
+    </a>
+      <nav class="side-nav" aria-label="Espacio personal">
+        <span class="nav-label">Mi espacio</span>
+        <a href="#inicio" data-view-link="inicio" aria-current="page">Inicio</a>
+        <a href="#progreso" data-view-link="progreso">Progreso</a>
+        <a href="#chat" data-view-link="chat">Chatbot</a>
+        <a href="#historial" data-view-link="historial">Historial</a>
+      </nav>
+      <a class="about-link" href="/#pruebas">Volver a las pruebas</a>
+    </aside>
+    <div class="workspace-content">
+      <header class="topbar">
+        <span>VITAIROS-M <span class="top-divider">/</span> Mi espacio</span>
+        <a class="button secondary" href="#contacto">Contactar profesionales</a>
+      </header>
+      <main id="principal" class="dashboard">
+        <section class="welcome">
+          <div><p class="date">Perfil local de prueba</p><h1 id="view-title" tabindex="-1">Mi espacio</h1><p class="muted" id="view-description">Registra cómo te fue y retoma tus conversaciones.</p></div>
+        </section>
+
+        <section data-view="inicio">
+          <div class="metrics">
+            <article class="card metric"><div><p>Registros de bienestar</p><strong id="checkin-count">0</strong><small id="last-checkin">Sin registros todavía</small></div><span class="metric-icon blue" aria-hidden="true">◷</span></article>
+            <article class="card metric"><div><p>Conversaciones guardadas</p><strong id="conversation-count">0</strong><small>En este navegador</small></div><span class="metric-icon mint" aria-hidden="true">◎</span></article>
+          </div>
+          <div class="personal-grid">
+            <article class="card pane"><h2>Haz un registro de prueba</h2><p>Marca cómo estuvo tu día para revisar tus registros a lo largo del tiempo.</p><a class="button primary" href="#progreso">Registrar bienestar</a></article>
+            <article class="card pane"><h2>Prepara una conversación</h2><p>Usa el chat para ordenar ideas o ensayar una pregunta para un profesional.</p><a class="button secondary" href="#chat">Abrir chatbot</a></article>
+          </div>
+        </section>
+
+        <section data-view="progreso" hidden>
+          <div class="personal-grid">
+            <form class="card pane" id="checkin-form">
+              <h2>¿Cómo estuvo tu día?</h2>
+              <p>Elige una valoración para el registro de hoy. Puedes actualizarla durante el día.</p>
+              <fieldset class="checkin-scale">
+                <legend>Bienestar del día</legend>
+                <label><input required type="radio" name="score" value="1"> Muy difícil</label>
+                <label><input type="radio" name="score" value="2"> Difícil</label>
+                <label><input type="radio" name="score" value="3"> Intermedio</label>
+                <label><input type="radio" name="score" value="4"> Bueno</label>
+                <label><input type="radio" name="score" value="5"> Muy bueno</label>
+              </fieldset>
+              <button type="submit" class="button primary">Guardar registro</button>
+            </form>
+            <article class="card pane"><h2>Registros recientes</h2><p>Tu valoración personal en una escala de 1 a 5.</p><ol id="checkin-list" class="plain-list"></ol><p id="empty-progress">Aún no tienes registros.</p></article>
+          </div>
+        </section>
+
+        <section class="card pane chat-pane" data-view="chat" hidden>
+          <div class="pane-heading"><h2 id="chat-title">Conversación nueva</h2><button class="button secondary" type="button" id="new-chat">Nueva conversación</button></div>
+          <p id="chat-mode">Comprobando el modo del chatbot…</p>
+          <p class="chat-note">Usa situaciones inventadas. El chat sirve para reflexionar y preparar preguntas. Si hay peligro inmediato, contacta a los servicios locales de emergencia.</p>
+          <ol id="messages" class="chat-log" aria-label="Mensajes de la conversación" aria-live="polite"></ol>
+          <p id="empty-chat">Puedes empezar con «Quiero preparar una pregunta para mi próxima sesión».</p>
+          <form id="chat-form">
+            <label for="message">Mensaje de prueba</label>
+            <textarea id="message" name="message" required maxlength="800" rows="3" placeholder="Escribe una situación ficticia"></textarea>
+            <label class="external-consent" id="consent-label" hidden><input type="checkbox" id="external-consent"> Autorizo enviar este mensaje y hasta ocho mensajes recientes del chat a <span id="provider-name"></span>.</label>
+            <button class="button primary" id="send-message" type="submit" disabled>Enviar mensaje</button>
+            <p id="chat-error" role="alert" hidden></p>
+          </form>
+        </section>
+
+        <section class="card pane" data-view="historial" hidden>
+          <h2>Conversaciones guardadas</h2><p>Puedes continuar o eliminar una conversación. El historial pertenece a este perfil de prueba en el navegador.</p>
+          <ul id="history-list" class="plain-list"></ul><p id="empty-history">Aún no hay conversaciones guardadas.</p>
+        </section>
+
+        <section class="card pane" data-view="contacto" hidden>
+          <h2>Consultar opciones de apoyo</h2>
+          <p>El equipo de VITAIROS puede informarte sobre el acceso anticipado y las próximas opciones de conexión con profesionales. Esta prueba no reserva horas ni comparte el historial.</p>
+          <a class="button primary" href="https://www.vitairos.com/vitairos-m/#participa">Ir al acceso anticipado oficial</a>
+        </section>
+
+        <footer class="dashboard-footer"><span>VITAIROS-M</span><span>Prototipo para usar con datos ficticios.</span></footer>
+      </main>
+    </div>
+  </div>
+  <dialog id="delete-chat" class="compact" aria-labelledby="delete-title">
+    <div class="dialog-heading"><div><h2 id="delete-title">Eliminar conversación</h2><p class="muted">Se quitará de este navegador.</p></div></div>
+    <form method="dialog" class="dialog-actions">
+      <button value="keep" class="button secondary" autofocus>Conservar</button>
+      <button value="delete" class="button danger">Eliminar</button>
+    </form>
+  </dialog>
+  <div id="personal-status" class="toast" role="status"></div>
+</body>
+</html>

@@ -304,13 +304,38 @@ dialog::backdrop { background: #0e2e30a1; }
 .journey-ring {
   position: absolute;
   width: 72%;
-  aspect-ratio: 1;
-  border: 1px solid #b8dfe9;
-  border-top-color: #509eb0;
-  border-right-color: #509eb0;
-  border-radius: 50%;
-  transform: rotate(21deg);
-  box-shadow: 0 0 32px #a2d3e11f;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+.journey-track, .journey-arc { fill: none; }
+.journey-track { stroke: #b8dfe9; vector-effect: non-scaling-stroke; }
+.journey-arc {
+  stroke: #1598b7;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 24 76;
+  --orbit-start: -140deg;
+}
+.journey-dot {
+  fill: #08748d;
+  stroke: #fff;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  --orbit-start: 35deg;
+}
+.journey-arc, .journey-dot {
+  transform-box: view-box;
+  transform-origin: center;
+  rotate: var(--orbit-start);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .journey-arc { animation: journey-orbit 18s linear infinite; }
+  .journey-dot { animation: journey-orbit 9s linear infinite; }
+}
+@keyframes journey-orbit {
+  from { rotate: var(--orbit-start); }
+  to { rotate: calc(var(--orbit-start) + 1turn); }
 }
 .journey-center, .journey-node {
   z-index: 1;
@@ -350,7 +375,7 @@ dialog::backdrop { background: #0e2e30a1; }
 }
 @media (max-width: 540px) {
   .journey-art { aspect-ratio: auto; gap: 14px; padding: 40px 12px 12px; }
-  .journey-ring { top: 3px; left: 50%; width: 172px; transform: translateX(-50%) rotate(21deg); }
+  .journey-ring { top: 3px; left: 50%; width: 172px; translate: -50% 0; }
   .journey-center { width: min(76%, 230px); padding: 14px; }
   .journey-nodes { position: relative; inset: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
   .journey-nodes .journey-node { position: relative; inset: auto; max-width: none; transform: none; padding: 7px 5px; }
