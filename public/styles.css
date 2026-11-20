@@ -465,6 +465,17 @@ dialog::backdrop { background: #0e2e30a1; }
 #chat-form > label:first-child { font-weight: 700; }
 #chat-form textarea { width: 100%; border: 1px solid #a8c4cc; border-radius: 8px; padding: 10px; font: inherit; resize: vertical; color: inherit; }
 .external-consent { color: var(--muted); }
+.voice-panel {
+  width: 100%;
+  min-inline-size: 0;
+  margin: 3px 0;
+  padding: 9px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.voice-panel legend { padding-inline: 4px; font-weight: 700; }
+.voice-panel .entry-actions { margin-top: 8px; }
+.voice-panel p:not(:empty) { margin-top: 7px; color: var(--muted); }
 #chat-error { color: #923443; }
 .button:disabled { opacity: .6; cursor: wait; }
 @media (max-width: 720px) {

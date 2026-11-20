@@ -1,3 +1,5 @@
+import { transcriptionReady } from './transcription.mjs';
+
 const providers = {
   groq: {
     url: 'https://api.groq.com/openai/v1/chat/completions',
@@ -50,7 +52,7 @@ function json(response, status, body) {
 }
 
 export function sendChatConfig(response) {
-  json(response, 200, chatConfig());
+  json(response, 200, { ...chatConfig(), voiceReady: transcriptionReady() });
 }
 
 export async function handleChat(request, response) {

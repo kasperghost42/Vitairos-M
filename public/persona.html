@@ -74,6 +74,15 @@
           <form id="chat-form">
             <label for="message">Mensaje de prueba</label>
             <textarea id="message" name="message" required maxlength="800" rows="3" placeholder="Escribe una situación ficticia"></textarea>
+            <fieldset id="voice-panel" class="voice-panel" hidden>
+              <legend>Dictar mensaje</legend>
+              <label class="external-consent"><input type="checkbox" id="voice-consent"> Autorizo enviar hasta 30 segundos de audio de prueba a Groq para transcribirlo.</label>
+              <div class="entry-actions">
+                <button class="button secondary" id="record-voice" type="button" disabled>Grabar voz</button>
+                <button class="button secondary" id="cancel-voice" type="button" hidden>Cancelar dictado</button>
+              </div>
+              <p id="voice-status" role="status"></p>
+            </fieldset>
             <label class="external-consent" id="consent-label" hidden><input type="checkbox" id="external-consent"> Autorizo enviar este mensaje y hasta ocho mensajes recientes del chat a <span id="provider-name"></span>.</label>
             <button class="button primary" id="send-message" type="submit" disabled>Enviar mensaje</button>
             <p id="chat-error" role="alert" hidden></p>

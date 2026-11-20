@@ -43,6 +43,8 @@ MISTRAL_API_KEY=tu_clave_local
 
 Reinicia `npm run dev` tras editar `.env`. El nombre del proveedor debe aparecer en el chatbot. Cada envío requiere autorizar la transmisión del mensaje y de hasta ocho mensajes recientes de esa conversación. Los registros de progreso nunca forman parte de la solicitud. La clave se utiliza en el servidor y no llega al navegador.
 
+Con Groq activo, el chatbot permite dictar mensajes. Autoriza el audio de prueba y pulsa **Grabar voz**. Usa **Detener y transcribir** cuando termines, o **Cancelar dictado** para descartar la grabación. La grabación se detiene a los 30 segundos y Groq la transcribe en español con Whisper. Revisa el texto antes de enviarlo al chat. La aplicación procesa el audio en memoria y guarda únicamente texto en el historial. Usa un navegador con acceso al micrófono en localhost.
+
 El prototipo está pensado para pruebas en localhost. Antes de usar cuentas o datos reales harían falta autenticación, almacenamiento seguro y revisión clínica y de privacidad.
 
 ## Referencias

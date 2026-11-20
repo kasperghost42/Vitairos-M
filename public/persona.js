@@ -1,3 +1,5 @@
+import { initVoice } from './voice.js';
+
 const key = 'vitairos-m-persona-v1';
 const byId = (id) => document.getElementById(id);
 const dayFormat = new Intl.DateTimeFormat('es-CL', { dateStyle: 'medium', timeZone: 'America/Santiago' });
@@ -146,6 +148,7 @@ function showView(moveFocus = false) {
   const name = location.hash.slice(1);
   const view = Object.hasOwn(views, name) ? name : 'inicio';
   if (currentView === view) return;
+  if (currentView === 'chat') voice.cancel();
   currentView = view;
   document.querySelectorAll('[data-view]').forEach((section) => {
     section.hidden = section.dataset.view !== view;
@@ -164,11 +167,13 @@ function showView(moveFocus = false) {
 }
 
 function renderControls() {
-  byId('message').disabled = waiting;
-  byId('new-chat').disabled = waiting;
-  byId('send-message').disabled = waiting || !config?.ready;
+  const busy = waiting || voice.busy;
+  byId('message').disabled = busy;
+  byId('new-chat').disabled = busy;
+  byId('send-message').disabled = busy || !config?.ready;
   byId('send-message').textContent = waiting ? 'Esperando respuesta…' : 'Enviar mensaje';
-  byId('external-consent').disabled = waiting;
+  byId('external-consent').disabled = busy;
+  voice.lock(waiting);
 }
 
 byId('checkin-form').addEventListener('submit', (event) => {
@@ -195,11 +200,13 @@ byId('new-chat').addEventListener('click', () => {
 
 byId('chat-form').addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (waiting || !config?.ready) return;
+  if (waiting || voice.busy || !config?.ready) return;
   const input = byId('message');
   const content = input.value.trim();
-  if (!content) {
-    byId('chat-error').textContent = 'Escribe un mensaje antes de enviarlo.';
+  if (!content || content.length > input.maxLength) {
+    byId('chat-error').textContent = content
+      ? 'Acorta el mensaje a 800 caracteres antes de enviarlo.'
+      : 'Escribe un mensaje antes de enviarlo.';
     byId('chat-error').hidden = false;
     input.focus();
     return;
@@ -248,6 +255,7 @@ async function loadChatConfig() {
     const response = await fetch('/api/chat/config');
     if (!response.ok) throw new Error('No se pudo leer la configuración.');
     config = await response.json();
+    voice.setup(config.voiceReady);
     const consent = byId('external-consent');
     byId('consent-label').hidden = !config.external || !config.ready;
     consent.required = config.external && config.ready;
@@ -263,6 +271,8 @@ async function loadChatConfig() {
   renderControls();
 }
 
+const voice = initVoice({ message: byId('message'), controlsChanged: renderControls });
+window.addEventListener('pagehide', () => voice.cancel());
 window.addEventListener('hashchange', () => showView(true));
 renderProgress();
 renderChat();

@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { loadEnvFile } from 'node:process';
 import { handleChat, sendChatConfig } from './chat.mjs';
+import { handleTranscription } from './transcription.mjs';
 
 try {
   loadEnvFile();
@@ -17,6 +18,7 @@ const pages = new Map([
   ['/styles.css', ['styles.css', 'text/css']],
   ['/app.js', ['app.js', 'text/javascript']],
   ['/persona.js', ['persona.js', 'text/javascript']],
+  ['/voice.js', ['voice.js', 'text/javascript']],
   ['/favicon.ico', ['favicon.ico', 'image/x-icon']],
   ['/vitairos-m-logo.png', ['vitairos-m-logo.png', 'image/png']],
 ]);
@@ -28,14 +30,15 @@ createServer(async (request, response) => {
     response.writeHead(403).end();
     return;
   }
-  if (path === '/api/chat' || path === '/api/chat/config') {
-    const method = path === '/api/chat' ? 'POST' : 'GET';
+  if (path === '/api/chat' || path === '/api/chat/config' || path === '/api/chat/transcription') {
+    const method = path === '/api/chat/config' ? 'GET' : 'POST';
     if (request.method !== method) {
       response.writeHead(405, { Allow: method }).end();
       return;
     }
     try {
       if (path === '/api/chat') await handleChat(request, response);
+      else if (path === '/api/chat/transcription') await handleTranscription(request, response);
       else sendChatConfig(response);
     } catch {
       if (!response.headersSent) response.writeHead(500).end();
