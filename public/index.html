@@ -3,162 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Demostración del espacio profesional de VITAIROS-M.">
-  <title>Panel profesional · VITAIROS-M</title>
+  <meta name="description" content="Conoce el recorrido de continuidad en salud mental propuesto por VITAIROS-M.">
+  <title>VITAIROS-M · Continuidad en salud mental</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="stylesheet" href="/styles.css">
-  <script type="module" src="/app.js"></script>
 </head>
-<body>
+<body class="experience">
   <a class="skip" href="#principal">Saltar al contenido</a>
-  <div class="workspace">
-    <aside class="sidebar">
-      <a class="brand" href="/" aria-label="VITAIROS-M, inicio"><span class="brand-mark" aria-hidden="true"></span>VITAIROS<span class="brand-m">M</span></a>
-      <nav aria-label="Espacio profesional" class="side-nav">
-        <span class="nav-label">Espacio profesional</span>
-        <a href="/" aria-current="page"><span class="nav-icon" aria-hidden="true">▦</span>Resumen</a>
-        <a href="#agenda"><span class="nav-icon" aria-hidden="true">▤</span>Agenda</a>
-        <button type="button" data-dialog="availability"><span class="nav-icon" aria-hidden="true">◷</span>Disponibilidad</button>
-        <a href="#ingresos"><span class="nav-icon" aria-hidden="true">▥</span>Ingresos</a>
-      </nav>
-      <a class="about-link" href="/experiencia"><span class="nav-icon" aria-hidden="true">ⓘ</span>Sobre VITAIROS-M</a>
-    </aside>
-
-    <div class="workspace-content">
-      <header class="topbar">
-        <span>VITAIROS-M <span class="top-divider">/</span> Panel profesional</span>
-        <div class="top-right">
-          <span class="demo-badge">Entorno de prueba</span>
-          <span class="avatar profile" title="Perfil profesional de demostración" aria-label="Perfil profesional de demostración">CM</span>
+  <header class="experience-nav">
+    <a class="brand" href="/" aria-label="VITAIROS-M"><span class="brand-mark" aria-hidden="true"></span>VITAIROS<span class="brand-m">M</span></a>
+    <nav aria-label="Navegación principal">
+      <a href="#brecha">La brecha</a>
+      <a href="#recorrido">Continuidad</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#participar">Participar</a>
+      <a class="button secondary" href="#pruebas">Paneles de prueba</a>
+    </nav>
+  </header>
+  <main id="principal">
+    <section class="experience-hero">
+      <div>
+        <p class="eyebrow">Continuidad en salud mental</p>
+        <h1>La vida sigue<br>entre sesiones.</h1>
+        <p>VITAIROS-M propone acompañarte con orientación asistida por IA y ayudarte a conectar con profesionales. Tú decides qué contexto puede acompañar el proceso.</p>
+        <div class="entry-actions">
+          <a class="button primary" href="#participar">Acceso anticipado</a>
+          <a class="button secondary" href="#recorrido">Cómo funciona</a>
         </div>
-      </header>
-
-      <main id="principal" class="dashboard">
-        <section class="welcome" aria-labelledby="title">
-          <div>
-            <p class="date" id="today-label"></p>
-            <h1 id="title">Hola, Camila</h1>
-            <p class="muted">Revisa tus próximas sesiones y prepara tu jornada.</p>
-          </div>
-          <button type="button" class="button primary" data-dialog="availability"><span aria-hidden="true">＋</span> Cargar disponibilidad</button>
-        </section>
-
-        <section class="metrics" aria-label="Resumen de actividad">
-          <article class="card metric">
-            <div><p>Personas activas</p><strong id="active-count"></strong><small>En los próximos siete días</small></div>
-            <span class="metric-icon mint" aria-hidden="true">◎</span>
-          </article>
-          <article class="card metric">
-            <div><p>Citas de hoy</p><strong id="today-count"></strong><small id="confirmed-count"></small></div>
-            <span class="metric-icon blue" aria-hidden="true">▦</span>
-          </article>
-          <article class="card metric">
-            <div><p>Horarios disponibles</p><strong id="availability-count"></strong><small>Franjas en la semana de prueba</small></div>
-            <span class="metric-icon gold" aria-hidden="true">◷</span>
-          </article>
-        </section>
-
-        <div class="dashboard-grid">
-          <section class="card agenda" id="agenda" aria-labelledby="agenda-title">
-            <div class="card-heading">
-              <div><h2 id="agenda-title">Próximas citas</h2><p>Consulta y gestiona tus sesiones.</p></div>
-              <div class="filters" role="group" aria-label="Período de la agenda">
-                <button type="button" data-period="today" aria-pressed="true">Hoy</button>
-                <button type="button" data-period="week" aria-pressed="false">Semana</button>
-              </div>
-            </div>
-            <div class="table-wrapper">
-              <table>
-                <thead><tr><th scope="col">Persona</th><th scope="col" id="date-heading">Hora</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead>
-                <tbody id="appointments"></tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="card alerts" aria-labelledby="alerts-title">
-            <div class="card-heading"><div><h2 id="alerts-title">Alertas</h2><p>Pendientes de tu espacio.</p></div></div>
-            <div class="notice gold">
-              <span class="notice-icon" aria-hidden="true">!</span>
-              <div><h3>Credencial profesional</h3><p id="license-alert"></p><button class="text-action" type="button" data-dialog="license">Revisar credencial</button></div>
-            </div>
-            <div class="notice blue">
-              <span class="notice-icon" aria-hidden="true">◷</span>
-              <div><h3>Disponibilidad semanal</h3><p id="availability-alert"></p><button class="text-action" type="button" data-dialog="availability">Editar horarios</button></div>
-            </div>
-          </section>
-
-          <section class="card earnings" id="ingresos" aria-labelledby="earnings-title">
-            <div class="card-heading">
-              <div><h2 id="earnings-title">Resumen de ingresos</h2><p>Importes de ejemplo en pesos chilenos.</p></div>
-              <strong class="earnings-total">$216.000</strong>
-            </div>
-            <dl class="income-chart" aria-label="Ingresos simulados de lunes a viernes">
-              <div style="--bar:64%"><dt>Lun</dt><dd>$36.000</dd></div>
-              <div style="--bar:86%"><dt>Mar</dt><dd>$48.000</dd></div>
-              <div style="--bar:43%"><dt>Mié</dt><dd>$24.000</dd></div>
-              <div style="--bar:96%"><dt>Jue</dt><dd>$54.000</dd></div>
-              <div style="--bar:96%"><dt>Vie</dt><dd>$54.000</dd></div>
-            </dl>
-          </section>
-
-          <section class="card consent" aria-labelledby="consent-title">
-            <span class="metric-icon mint" aria-hidden="true">✓</span>
-            <h2 id="consent-title">Contexto con consentimiento</h2>
-            <p>La persona decide si comparte contexto con el profesional y para qué propósito. Las fichas de este panel usan ejemplos ficticios.</p>
-            <a href="/experiencia">Conocer el recorrido</a>
-          </section>
-        </div>
-        <footer class="dashboard-footer"><span>VITAIROS-M</span><span>Datos ficticios para pruebas locales.</span></footer>
-      </main>
-    </div>
-  </div>
-
-  <dialog id="availability" aria-labelledby="availability-title">
-    <div class="dialog-heading">
-      <div><h2 id="availability-title">Disponibilidad semanal</h2><p class="muted">Selecciona las franjas en las que puedes atender.</p></div>
-      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
-    </div>
-    <div class="slots" id="slots"></div>
-    <div class="dialog-actions">
-      <button type="button" class="button secondary" data-close>Cancelar</button>
-      <button type="button" class="button primary" id="save-slots">Guardar horarios</button>
-    </div>
-  </dialog>
-
-  <dialog id="license" class="compact" aria-labelledby="license-title">
-    <div class="dialog-heading">
-      <div><h2 id="license-title">Credencial profesional</h2><p class="muted">Registro ficticio de Camila Morales.</p></div>
-      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
-    </div>
-    <dl class="details"><div><dt>Profesión</dt><dd>Psicóloga</dd></div><div><dt>Vigencia</dt><dd id="license-date"></dd></div></dl>
-    <p class="muted">La renovación de credenciales queda fuera de esta demostración.</p>
-    <div class="dialog-actions"><button type="button" class="button primary" data-close>Entendido</button></div>
-  </dialog>
-
-  <dialog id="profile" class="compact" aria-labelledby="profile-title">
-    <div class="dialog-heading">
-      <div><h2 id="profile-title"></h2><p class="muted">Ficha de demostración</p></div>
-      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
-    </div>
-    <dl class="details">
-      <div><dt>Horario</dt><dd id="profile-date"></dd></div>
-      <div><dt>Estado</dt><dd id="profile-state"></dd></div>
-      <div><dt>Modalidad</dt><dd>En línea</dd></div>
-    </dl>
-    <h3>Contexto autorizado</h3>
-    <p id="profile-context" class="muted"></p>
-    <div class="dialog-actions"><button type="button" class="button secondary" data-close>Cerrar ficha</button></div>
-  </dialog>
-
-  <dialog id="cancel" class="compact" aria-labelledby="cancel-title">
-    <div class="dialog-heading">
-      <div><h2 id="cancel-title">Cancelar cita</h2><p class="muted" id="cancel-message"></p></div>
-      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
-    </div>
-    <div class="dialog-actions">
-      <button type="button" class="button secondary" data-close autofocus>Volver</button>
-      <button type="button" class="button danger" id="confirm-cancel">Cancelar cita</button>
-    </div>
-  </dialog>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+      <div class="journey-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="orb"></span></div>
+    </section>
+    <section id="brecha" class="experience-section">
+      <h2>Entre una sesión y otra también pasan cosas importantes</h2>
+      <p>Una conversación, una mala noche o un pequeño logro pueden importar en la próxima sesión. VITAIROS-M propone un espacio para organizar esos cambios y decidir cuáles vale la pena llevar a una conversación profesional.</p>
+    </section>
+    <section id="recorrido" class="experience-section">
+      <h2>Cómo continúa el acompañamiento</h2>
+      <p>El recorrido parte con la persona. La orientación asistida por IA ayuda a ordenar sus preguntas, el contexto puede pasar a un profesional con autorización y lo trabajado sirve para retomar el proceso.</p>
+      <div class="journey-steps">
+        <article class="card"><p class="eyebrow">Antes</p><h3>Ordena lo que vives</h3><p>La orientación inicial te ayuda a poner en palabras lo que cambió y a considerar un siguiente paso.</p></article>
+        <article class="card"><p class="eyebrow">Entre sesiones</p><h3>Elige qué compartir</h3><p>Si lo autorizas, el profesional puede recibir el contexto pertinente para tu próxima conversación.</p></article>
+        <article class="card"><p class="eyebrow">Después</p><h3>Retoma desde donde estás</h3><p>El criterio profesional guía el proceso y el acompañamiento puede ajustarse a tus nuevos objetivos.</p></article>
+      </div>
+    </section>
+    <section id="experiencia" class="experience-section">
+      <h2>Una experiencia desde dos perspectivas</h2>
+      <div class="personal-grid">
+        <article class="card pane"><h3>Para personas</h3><p>Registra cómo te ha ido, revisa tu evolución y usa el chat para preparar una pregunta o un siguiente paso. El contacto profesional sigue siendo una decisión tuya.</p></article>
+        <article class="card pane"><h3>Para profesionales</h3><p>Organiza citas y disponibilidad. Cuando la persona decide compartir contexto, puedes revisarlo antes de atender y usar tu criterio para orientar la sesión.</p></article>
+      </div>
+    </section>
+    <section id="seguridad" class="experience-section standards">
+      <h2>Tú decides qué contexto se comparte</h2>
+      <p>La propuesta contempla que cada persona pueda decidir qué compartir y con qué propósito. La orientación que ofrece el asistente es general. El diagnóstico, la indicación de tratamientos y la atención de urgencia requieren apoyo humano calificado.</p>
+      <p>Las pruebas son para datos ficticios. Los registros y conversaciones se guardan en este navegador. Cuando se configura un proveedor de IA, solo se envía contexto del chat con autorización expresa.</p>
+    </section>
+    <section id="pruebas" class="experience-section">
+      <h2>Prueba los dos paneles</h2>
+      <div class="personal-grid">
+        <article class="card pane"><h3>Espacio personal</h3><p>Registra tu bienestar, conversa con el asistente y retoma un chat guardado.</p><a class="button primary" href="/persona">Probar vista de persona</a></article>
+        <article class="card pane"><h3>Panel profesional</h3><p>Prueba la agenda, la disponibilidad y las fichas ficticias con contexto autorizado.</p><a class="button secondary" href="/panel">Probar panel profesional</a></article>
+      </div>
+    </section>
+    <section id="participar" class="experience-section">
+      <h2>Participa en el acceso anticipado</h2>
+      <div class="journey-steps">
+        <article class="card"><h3>Personas</h3><p>Conoce las próximas experiencias de orientación y continuidad.</p></article>
+        <article class="card"><h3>Profesionales</h3><p>Manifiesta tu interés en la red profesional inicial y sus futuras pruebas.</p></article>
+        <article class="card"><h3>Instituciones</h3><p>Consulta las opciones para explorar un piloto con tu comunidad.</p></article>
+      </div>
+      <a class="button primary" href="https://www.vitairos.com/vitairos-m/#participa">Participar en el sitio oficial</a>
+    </section>
+  </main>
+  <footer class="experience-footer">VITAIROS-M · Una iniciativa de <a href="https://www.vitairos.com/">VITAIROS SpA</a></footer>
 </body>
 </html>
