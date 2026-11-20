@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Demostración del espacio profesional de VITAIROS-M.">
+  <title>Panel profesional · VITAIROS-M</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#principal">Saltar al contenido</a>
+  <div class="workspace">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="VITAIROS-M, inicio"><span class="brand-mark" aria-hidden="true"></span>VITAIROS<span class="brand-m">M</span></a>
+      <nav aria-label="Espacio profesional" class="side-nav">
+        <span class="nav-label">Espacio profesional</span>
+        <a href="/" aria-current="page"><span class="nav-icon" aria-hidden="true">▦</span>Resumen</a>
+        <a href="#agenda"><span class="nav-icon" aria-hidden="true">▤</span>Agenda</a>
+        <button type="button" data-dialog="availability"><span class="nav-icon" aria-hidden="true">◷</span>Disponibilidad</button>
+        <a href="#ingresos"><span class="nav-icon" aria-hidden="true">▥</span>Ingresos</a>
+      </nav>
+      <a class="about-link" href="/experiencia"><span class="nav-icon" aria-hidden="true">ⓘ</span>Sobre VITAIROS-M</a>
+    </aside>
+
+    <div class="workspace-content">
+      <header class="topbar">
+        <span>VITAIROS-M <span class="top-divider">/</span> Panel profesional</span>
+        <div class="top-right">
+          <span class="demo-badge">Entorno de prueba</span>
+          <span class="avatar profile" title="Perfil profesional de demostración" aria-label="Perfil profesional de demostración">CM</span>
+        </div>
+      </header>
+
+      <main id="principal" class="dashboard">
+        <section class="welcome" aria-labelledby="title">
+          <div>
+            <p class="date" id="today-label"></p>
+            <h1 id="title">Hola, Camila</h1>
+            <p class="muted">Revisa tus próximas sesiones y prepara tu jornada.</p>
+          </div>
+          <button type="button" class="button primary" data-dialog="availability"><span aria-hidden="true">＋</span> Cargar disponibilidad</button>
+        </section>
+
+        <section class="metrics" aria-label="Resumen de actividad">
+          <article class="card metric">
+            <div><p>Personas activas</p><strong id="active-count"></strong><small>En los próximos siete días</small></div>
+            <span class="metric-icon mint" aria-hidden="true">◎</span>
+          </article>
+          <article class="card metric">
+            <div><p>Citas de hoy</p><strong id="today-count"></strong><small id="confirmed-count"></small></div>
+            <span class="metric-icon blue" aria-hidden="true">▦</span>
+          </article>
+          <article class="card metric">
+            <div><p>Horarios disponibles</p><strong id="availability-count"></strong><small>Franjas en la semana de prueba</small></div>
+            <span class="metric-icon gold" aria-hidden="true">◷</span>
+          </article>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="card agenda" id="agenda" aria-labelledby="agenda-title">
+            <div class="card-heading">
+              <div><h2 id="agenda-title">Próximas citas</h2><p>Consulta y gestiona tus sesiones.</p></div>
+              <div class="filters" role="group" aria-label="Período de la agenda">
+                <button type="button" data-period="today" aria-pressed="true">Hoy</button>
+                <button type="button" data-period="week" aria-pressed="false">Semana</button>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th scope="col">Persona</th><th scope="col" id="date-heading">Hora</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead>
+                <tbody id="appointments"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card alerts" aria-labelledby="alerts-title">
+            <div class="card-heading"><div><h2 id="alerts-title">Alertas</h2><p>Pendientes de tu espacio.</p></div></div>
+            <div class="notice gold">
+              <span class="notice-icon" aria-hidden="true">!</span>
+              <div><h3>Credencial profesional</h3><p id="license-alert"></p><button class="text-action" type="button" data-dialog="license">Revisar credencial</button></div>
+            </div>
+            <div class="notice blue">
+              <span class="notice-icon" aria-hidden="true">◷</span>
+              <div><h3>Disponibilidad semanal</h3><p id="availability-alert"></p><button class="text-action" type="button" data-dialog="availability">Editar horarios</button></div>
+            </div>
+          </section>
+
+          <section class="card earnings" id="ingresos" aria-labelledby="earnings-title">
+            <div class="card-heading">
+              <div><h2 id="earnings-title">Resumen de ingresos</h2><p>Importes de ejemplo en pesos chilenos.</p></div>
+              <strong class="earnings-total">$216.000</strong>
+            </div>
+            <dl class="income-chart" aria-label="Ingresos simulados de lunes a viernes">
+              <div style="--bar:64%"><dt>Lun</dt><dd>$36.000</dd></div>
+              <div style="--bar:86%"><dt>Mar</dt><dd>$48.000</dd></div>
+              <div style="--bar:43%"><dt>Mié</dt><dd>$24.000</dd></div>
+              <div style="--bar:96%"><dt>Jue</dt><dd>$54.000</dd></div>
+              <div style="--bar:96%"><dt>Vie</dt><dd>$54.000</dd></div>
+            </dl>
+          </section>
+
+          <section class="card consent" aria-labelledby="consent-title">
+            <span class="metric-icon mint" aria-hidden="true">✓</span>
+            <h2 id="consent-title">Contexto con consentimiento</h2>
+            <p>La persona decide si comparte contexto con el profesional y para qué propósito. Las fichas de este panel usan ejemplos ficticios.</p>
+            <a href="/experiencia">Conocer el recorrido</a>
+          </section>
+        </div>
+        <footer class="dashboard-footer"><span>VITAIROS-M</span><span>Datos ficticios para pruebas locales.</span></footer>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="availability" aria-labelledby="availability-title">
+    <div class="dialog-heading">
+      <div><h2 id="availability-title">Disponibilidad semanal</h2><p class="muted">Selecciona las franjas en las que puedes atender.</p></div>
+      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+    </div>
+    <div class="slots" id="slots"></div>
+    <div class="dialog-actions">
+      <button type="button" class="button secondary" data-close>Cancelar</button>
+      <button type="button" class="button primary" id="save-slots">Guardar horarios</button>
+    </div>
+  </dialog>
+
+  <dialog id="license" class="compact" aria-labelledby="license-title">
+    <div class="dialog-heading">
+      <div><h2 id="license-title">Credencial profesional</h2><p class="muted">Registro ficticio de Camila Morales.</p></div>
+      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+    </div>
+    <dl class="details"><div><dt>Profesión</dt><dd>Psicóloga</dd></div><div><dt>Vigencia</dt><dd id="license-date"></dd></div></dl>
+    <p class="muted">La renovación de credenciales queda fuera de esta demostración.</p>
+    <div class="dialog-actions"><button type="button" class="button primary" data-close>Entendido</button></div>
+  </dialog>
+
+  <dialog id="profile" class="compact" aria-labelledby="profile-title">
+    <div class="dialog-heading">
+      <div><h2 id="profile-title"></h2><p class="muted">Ficha de demostración</p></div>
+      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+    </div>
+    <dl class="details">
+      <div><dt>Horario</dt><dd id="profile-date"></dd></div>
+      <div><dt>Estado</dt><dd id="profile-state"></dd></div>
+      <div><dt>Modalidad</dt><dd>En línea</dd></div>
+    </dl>
+    <h3>Contexto autorizado</h3>
+    <p id="profile-context" class="muted"></p>
+    <div class="dialog-actions"><button type="button" class="button secondary" data-close>Cerrar ficha</button></div>
+  </dialog>
+
+  <dialog id="cancel" class="compact" aria-labelledby="cancel-title">
+    <div class="dialog-heading">
+      <div><h2 id="cancel-title">Cancelar cita</h2><p class="muted" id="cancel-message"></p></div>
+      <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="button secondary" data-close autofocus>Volver</button>
+      <button type="button" class="button danger" id="confirm-cancel">Cancelar cita</button>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
