@@ -22,6 +22,10 @@
         <a href="#progreso" data-view-link="progreso"><span class="nav-icon" aria-hidden="true">▥</span>Progreso</a>
         <a href="#chat" data-view-link="chat"><span class="nav-icon" aria-hidden="true">▤</span>Chatbot</a>
         <a href="#historial" data-view-link="historial"><span class="nav-icon" aria-hidden="true">◷</span>Historial</a>
+        <a href="#consejos" data-view-link="consejos"><span class="nav-icon" aria-hidden="true">☀</span>Consejos</a>
+        <a href="#agenda" data-view-link="agenda"><span class="nav-icon" aria-hidden="true">▦</span>Mi agenda</a>
+        <a href="#ficha" data-view-link="ficha"><span class="nav-icon" aria-hidden="true">▤</span>Mi ficha</a>
+        <a href="#logros" data-view-link="logros"><span class="nav-icon" aria-hidden="true">☆</span>Logros</a>
       </nav>
       <a class="about-link" href="/#pruebas">Volver a las pruebas</a>
     </aside>
@@ -40,28 +44,74 @@
             <article class="card metric"><div><p>Registros de bienestar</p><strong id="checkin-count">0</strong><small id="last-checkin">Sin registros todavía</small></div><span class="metric-icon blue" aria-hidden="true">◷</span></article>
             <article class="card metric"><div><p>Conversaciones guardadas</p><strong id="conversation-count">0</strong><small>En este navegador</small></div><span class="metric-icon mint" aria-hidden="true">◎</span></article>
           </div>
-          <div class="personal-grid personal-actions">
-            <article class="card pane"><h2>Haz un registro de prueba</h2><p>Marca cómo estuvo tu día para revisar tus registros a lo largo del tiempo.</p><a class="button primary" href="#progreso">Registrar bienestar</a></article>
-            <article class="card pane"><h2>Prepara una conversación</h2><p>Usa el chat para ordenar ideas o ensayar una pregunta para un profesional.</p><a class="button secondary" href="#chat">Abrir chatbot</a></article>
+          <div class="personal-grid personal-actions home-cards">
+            <article class="card pane"><span class="home-card-icon mint" aria-hidden="true">◎</span><h2>Mi estado emocional</h2><p id="home-emotion">Tómate un momento para reconocer cómo te sientes.</p><a class="button primary" href="#progreso">Registrar emoción</a></article>
+            <article class="card pane"><span class="home-card-icon gold" aria-hidden="true">☀</span><h2>Consejo diario</h2><p id="home-tip">Una pequeña acción para hacer espacio para ti.</p><a class="button secondary" href="#consejos">Ir a consejos diarios</a></article>
+            <article class="card pane"><span class="home-card-icon blue" aria-hidden="true">▤</span><h2>Chat</h2><p>Un espacio para ordenar ideas y preparar una conversación con un profesional.</p><a class="button secondary" href="#chat">Ir al chat</a></article>
+            <article class="card pane"><span class="home-card-icon blue" aria-hidden="true">▦</span><h2>Próxima cita</h2><p id="home-appointment">Sin citas anotadas.</p><a class="button secondary" href="#agenda">Ver agenda</a></article>
+            <article class="card pane"><span class="home-card-icon mint" aria-hidden="true">▥</span><h2>Ficha y estadísticas</h2><dl class="home-stats" id="home-stats"></dl><a class="button secondary" href="#ficha">Ir a mi ficha</a></article>
+            <article class="card pane"><span class="home-card-icon gold" aria-hidden="true">☆</span><h2>Logros</h2><p id="home-achievements">Cada pequeño paso cuenta. Descubre tus próximos hitos.</p><div id="home-trophies" class="home-trophies" aria-label="Logros desbloqueados"></div><a class="button secondary" href="#logros">Ver logros</a></article>
           </div>
+        </section>
+
+        <section data-view="consejos" hidden>
+          <div class="section-heading"><div><h2>Un momento para ti</h2><p class="muted">Dos ideas cada día. Elige la que te acomode y márcala cuando la hayas hecho.</p></div><a class="button secondary" href="#inicio">Volver al inicio</a></div>
+          <div id="daily-tips" class="personal-grid"></div>
+          <article class="card pane section-space"><h2>Tu constancia</h2><p id="tips-summary"></p><a class="button secondary" href="#logros">Ver mis avances</a></article>
+        </section>
+
+        <section data-view="agenda" hidden>
+          <div class="personal-grid">
+            <article class="card pane"><h2>Mis próximas citas</h2><p>Agenda personal de prueba. Anotar una cita aquí no realiza una reserva con un profesional.</p><ul id="appointment-list" class="plain-list"></ul><p id="empty-appointments">Aún no has anotado citas.</p><a class="button secondary" href="#contacto">Consultar profesionales</a></article>
+            <form id="appointment-form" class="card pane personal-form"><h2>Anotar una cita de prueba</h2><label for="appointment-name">Profesional</label><input id="appointment-name" name="professional" required maxlength="80" placeholder="Nombre ficticio"><label for="appointment-date">Fecha</label><input id="appointment-date" name="date" type="date" required><label for="appointment-time">Hora</label><input id="appointment-time" name="time" type="time" required><label for="appointment-mode">Modalidad</label><select id="appointment-mode" name="mode"><option>Videollamada</option><option>Presencial</option></select><button class="button primary" type="submit">Guardar en mi agenda</button></form>
+          </div>
+        </section>
+
+        <section data-view="ficha" hidden>
+          <div class="personal-grid">
+            <article class="card pane"><h2>Mi actividad</h2><p>Un resumen de tus registros en este navegador.</p><dl id="personal-stats" class="details"></dl><a class="button secondary" href="#progreso">Ver mis registros</a></article>
+            <article class="card pane"><h2>Notas personales</h2><p>Los comentarios que añadiste al registrar tu emoción.</p><ul id="personal-notes" class="plain-list"></ul><p id="empty-notes">Todavía no hay notas. Puedes añadir un comentario en tu próximo registro.</p><a class="button secondary" href="#progreso">Añadir un registro</a></article>
+          </div>
+        </section>
+
+        <section data-view="logros" hidden>
+          <div class="personal-grid achievement-overview">
+            <article class="card pane achievement-level"><p class="eyebrow">Cada paso cuenta</p><h2>Tu progreso</h2><div class="level-line"><strong id="achievement-level">Nivel 1</strong><span id="achievement-xp">0 XP</span></div><progress id="level-progress" max="100" value="0" aria-label="Avance al próximo nivel"></progress><p id="achievement-next-level"></p><p class="achievement-note">Los logros reconocen tu participación, independientemente de cómo te sientas.</p></article>
+            <article class="card pane"><h2>Resumen semanal</h2><p>Últimos 7 días</p><div class="weekly-summary"><div id="weekly-ring" class="weekly-ring"><strong id="weekly-percent">0%</strong></div><dl id="weekly-stats" class="home-stats"></dl></div><p id="weekly-message"></p></article>
+          </div>
+          <div class="section-heading section-space"><h2>Mis logros</h2><button id="copy-achievements" class="button secondary" type="button">Copiar resumen</button></div>
+          <div class="achievement-filters" role="group" aria-label="Filtrar logros por categoría"><button class="button secondary" type="button" data-achievement-filter="general" aria-pressed="true">General</button><button class="button secondary" type="button" data-achievement-filter="habitos" aria-pressed="false">Hábitos</button><button class="button secondary" type="button" data-achievement-filter="emocion" aria-pressed="false">Emoción</button><button class="button secondary" type="button" data-achievement-filter="comunidad" aria-pressed="false">Comunidad</button></div>
+          <article class="card pane section-space"><h2>Trofeos</h2><ul id="trophy-list" class="trophy-grid"></ul></article>
+          <article class="card pane section-space"><h2>Hitos por completar</h2><div id="achievement-goals" class="goal-grid"></div><p id="all-achievements" hidden>¡Completaste todos los hitos de esta categoría!</p></article>
         </section>
 
         <section data-view="progreso" hidden>
           <div class="personal-grid">
             <form class="card pane" id="checkin-form">
-              <h2>¿Cómo estuvo tu día?</h2>
-              <p>Elige una valoración para el registro de hoy. Puedes actualizarla durante el día.</p>
-              <fieldset class="checkin-scale">
-                <legend>Bienestar del día</legend>
-                <label><input required type="radio" name="score" value="1"> Muy difícil</label>
-                <label><input type="radio" name="score" value="2"> Difícil</label>
-                <label><input type="radio" name="score" value="3"> Intermedio</label>
-                <label><input type="radio" name="score" value="4"> Bueno</label>
-                <label><input type="radio" name="score" value="5"> Muy bueno</label>
-              </fieldset>
-              <button type="submit" class="button primary">Guardar registro</button>
+              <h2><label for="emotion-value">¿Cómo te sientes ahora?</label></h2>
+              <p id="emotion-help">Arrastra el control para subir o bajar tu termómetro emocional. Puedes actualizar tu registro durante el día.</p>
+              <div class="emotion-picker">
+                <div class="emotion-preview">
+                  <span id="emotion-emoji" class="emotion-emoji" aria-hidden="true">😌</span>
+                  <output id="emotion-result" for="emotion-value">Contento (50)</output>
+                </div>
+                <div class="emotion-thermometer">
+                  <input id="emotion-value" name="emotionValue" type="range" min="0" max="100" step="1" value="50" aria-describedby="emotion-help" aria-valuetext="Contento, 50 de 100">
+                  <div class="emotion-labels" aria-label="Elegir emoción">
+                    <button type="button" data-emotion-value="100"><span aria-hidden="true">😄</span> Muy feliz</button>
+                    <button type="button" data-emotion-value="80"><span aria-hidden="true">😊</span> Feliz</button>
+                    <button type="button" data-emotion-value="60"><span aria-hidden="true">😌</span> Contento</button>
+                    <button type="button" data-emotion-value="40"><span aria-hidden="true">😐</span> Neutral</button>
+                    <button type="button" data-emotion-value="20"><span aria-hidden="true">😔</span> Triste</button>
+                    <button type="button" data-emotion-value="0"><span aria-hidden="true">😢</span> Muy triste</button>
+                  </div>
+                </div>
+              </div>
+              <label class="emotion-comment-label" for="emotion-comment">Comentario opcional</label>
+              <textarea id="emotion-comment" name="comment" rows="3" maxlength="800" placeholder="¿Qué influyó en tu emoción hoy?"></textarea>
+              <button type="submit" class="button primary emotion-save">Guardar registro</button>
             </form>
-            <article class="card pane"><h2>Registros recientes</h2><p>Tu valoración personal en una escala de 1 a 5.</p><ol id="checkin-list" class="plain-list"></ol><p id="empty-progress">Aún no tienes registros.</p></article>
+            <article class="card pane"><h2>Registros recientes</h2><p>Tu emoción y lo que influyó en tu día. Los nuevos registros usan una escala de 0 a 100.</p><ol id="checkin-list" class="plain-list"></ol><p id="empty-progress">Aún no tienes registros.</p></article>
           </div>
         </section>
 

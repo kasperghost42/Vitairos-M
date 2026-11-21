@@ -8,6 +8,7 @@ Requiere Node.js 20.12 o superior. El proyecto no tiene dependencias externas.
 
 ```sh
 npm run check
+npm test
 npm run dev
 ```
 
@@ -16,6 +17,12 @@ npm run dev
 - [Espacio personal](http://localhost:4173/persona) con inicio, registros diarios, chatbot, historial y acceso al canal oficial de participación.
 
 El perfil personal es local al navegador. Los registros de bienestar y los chats se recuperan al recargar en el mismo navegador y origen. Para probar la continuidad, crea dos chats, abre el historial y pulsa **Continuar** en el primero. Puedes eliminar conversaciones desde el historial.
+
+El inicio personal reúne el estado emocional, consejos diarios, chat, próxima cita, ficha y logros. La escala emocional permite registrar un valor de 0 a 100 y un comentario opcional; los registros antiguos conservan su valoración original. La ficha muestra esos comentarios y las estadísticas de actividad.
+
+Los consejos se renuevan cada día y pueden marcarse como hechos. Logros incluye categorías, trofeos, hitos, niveles, XP y un resumen de los últimos siete días, calculados a partir de la actividad local. Una emoción baja cuenta igual que una alta para los logros. Copiar el resumen no lo publica ni incluye los comentarios personales.
+
+La agenda personal permite anotar citas ficticias y marcar como asistidas las que ya pasaron. No realiza reservas, envía avisos ni se sincroniza con el panel profesional. Los datos de consejos, agenda y logros también se guardan en el mismo perfil local.
 
 ## Activar un proveedor de chat
 

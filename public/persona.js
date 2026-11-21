@@ -1,4 +1,5 @@
 import { initVoice } from './voice.js';
+import { initHome } from './home.js';
 
 const key = 'vitairos-m-persona-v1';
 const byId = (id) => document.getElementById(id);
@@ -7,15 +8,43 @@ const localDay = new Intl.DateTimeFormat('sv-SE', {
   year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Santiago',
 });
 const scores = ['Muy difícil', 'Difícil', 'Intermedio', 'Bueno', 'Muy bueno'];
+const emotions = [
+  { label: 'Muy triste', emoji: '😢' },
+  { label: 'Triste', emoji: '😔' },
+  { label: 'Neutral', emoji: '😐' },
+  { label: 'Contento', emoji: '😌' },
+  { label: 'Feliz', emoji: '😊' },
+  { label: 'Muy feliz', emoji: '😄' },
+];
+
+function emotionFor(value) {
+  return emotions[Math.min(5, Math.floor((value + 10) / 20))];
+}
+
+function renderEmotion() {
+  const input = byId('emotion-value');
+  const value = Number(input.value);
+  const emotion = emotionFor(value);
+  byId('emotion-emoji').textContent = emotion.emoji;
+  byId('emotion-result').textContent = `${emotion.label} (${value})`;
+  input.setAttribute('aria-valuetext', `${emotion.label}, ${value} de 100`);
+  document.querySelectorAll('[data-emotion-value]').forEach((button) => {
+    button.setAttribute('aria-pressed', String(emotionFor(Number(button.dataset.emotionValue)) === emotion));
+  });
+}
 const views = {
   inicio: ['Mi espacio', 'Registra cómo te fue y retoma tus conversaciones.'],
   progreso: ['Mi progreso', 'Revisa tus registros de bienestar a lo largo del tiempo.'],
   chat: ['Chatbot', 'Ordena una idea o prepara una pregunta para tu próxima sesión.'],
   historial: ['Historial', 'Vuelve a una conversación guardada.'],
   contacto: ['Contactar profesionales', 'Consulta las opciones de acceso y orientación profesional.'],
+  consejos: ['Consejos diarios', 'Pequeñas acciones para hacer espacio para ti.'],
+  agenda: ['Mi agenda', 'Organiza tus citas de prueba en este navegador.'],
+  ficha: ['Mi ficha', 'Tus registros, notas personales y actividad en un solo lugar.'],
+  logros: ['Mis logros', 'Reconoce cada pequeño paso, a tu propio ritmo.'],
 };
 
-const state = { checkins: [], conversations: [], activeId: null };
+const state = { checkins: [], conversations: [], activeId: null, completedTips: [], appointments: [], summaryCopied: false };
 let config;
 let waiting = false;
 let toastTimer;
@@ -32,6 +61,9 @@ try {
   if (Array.isArray(saved?.checkins)) state.checkins = saved.checkins;
   if (Array.isArray(saved?.conversations)) state.conversations = saved.conversations;
   if (typeof saved?.activeId === 'string') state.activeId = saved.activeId;
+  if (Array.isArray(saved?.completedTips)) state.completedTips = saved.completedTips.filter(item => typeof item === 'string');
+  if (Array.isArray(saved?.appointments)) state.appointments = saved.appointments.filter(item => item && typeof item.date === 'string' && typeof item.time === 'string' && typeof item.professional === 'string');
+  state.summaryCopied = saved?.summaryCopied === true;
 } catch {
   announce('El navegador no pudo recuperar los datos de prueba.');
 }
@@ -64,22 +96,26 @@ function renderProgress() {
   const entries = [...state.checkins].sort((a, b) => b.date.localeCompare(a.date));
   const today = localDay.format();
   const selection = entries.find((item) => item.date === today);
-  for (const radio of byId('checkin-form').elements.score) {
-    radio.checked = Number(radio.value) === selection?.score;
-  }
+  byId('emotion-value').value = selection?.emotionValue ?? (selection ? [0, 20, 40, 80, 100][selection.score - 1] : 50);
+  byId('emotion-comment').value = selection?.comment ?? '';
+  renderEmotion();
   byId('checkin-count').textContent = entries.length;
   byId('last-checkin').textContent = entries.length ? 'Último: ' + formatDay(entries[0].date) : 'Sin registros todavía';
-  byId('checkin-list').replaceChildren(...entries.slice(0, 7).map(({ date, score }) => {
+  byId('checkin-list').replaceChildren(...entries.slice(0, 7).map(({ date, score, emotionValue, comment }) => {
     const row = element('li', '', 'checkin-row');
-    const value = element('strong', score + '/5 · ' + scores[score - 1]);
+    const hasEmotion = Number.isInteger(emotionValue);
+    const emotion = hasEmotion ? emotionFor(emotionValue) : null;
+    const value = element('strong', hasEmotion ? `${emotion.emoji} ${emotion.label} · ${emotionValue}/100` : score + '/5 · ' + scores[score - 1]);
     const bar = document.createElement('progress');
-    bar.max = 5;
-    bar.value = score;
+    bar.max = hasEmotion ? 100 : 5;
+    bar.value = hasEmotion ? emotionValue : score;
     bar.setAttribute('aria-label', 'Valoración del ' + formatDay(date));
     row.append(element('span', formatDay(date)), value, bar);
+    if (comment) row.append(element('p', comment, 'checkin-comment'));
     return row;
   }));
   byId('empty-progress').hidden = entries.length > 0;
+  home.render();
 }
 
 function renderChat() {
@@ -142,12 +178,14 @@ function renderHistory() {
     row.append(info, actions);
     return row;
   }));
+  home.render();
 }
 
 function showView(moveFocus = false) {
   const name = location.hash.slice(1);
   const view = Object.hasOwn(views, name) ? name : 'inicio';
   if (currentView === view) return;
+  home.render();
   if (currentView === 'chat') voice.cancel();
   currentView = view;
   document.querySelectorAll('[data-view]').forEach((section) => {
@@ -176,14 +214,25 @@ function renderControls() {
   voice.lock(waiting);
 }
 
+byId('emotion-value').addEventListener('input', renderEmotion);
+document.querySelectorAll('[data-emotion-value]').forEach((button) => {
+  button.addEventListener('click', () => {
+    byId('emotion-value').value = button.dataset.emotionValue;
+    renderEmotion();
+  });
+});
+
 byId('checkin-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  const score = Number(new FormData(event.currentTarget).get('score'));
-  if (!Number.isInteger(score) || score < 1 || score > 5) return;
+  const data = new FormData(event.currentTarget);
+  const emotionValue = Number(data.get('emotionValue'));
+  if (!Number.isInteger(emotionValue) || emotionValue < 0 || emotionValue > 100) return;
+  const comment = String(data.get('comment') ?? '').trim().slice(0, 800);
+  const score = Math.round(emotionValue / 25) + 1;
   const date = localDay.format();
   const prior = state.checkins.find((entry) => entry.date === date);
-  if (prior) prior.score = score;
-  else state.checkins.push({ date, score });
+  if (prior) Object.assign(prior, { score, emotionValue, comment });
+  else state.checkins.push({ date, score, emotionValue, comment });
   persist('Registro del día guardado.');
   renderProgress();
 });
@@ -272,6 +321,7 @@ async function loadChatConfig() {
 }
 
 const voice = initVoice({ message: byId('message'), controlsChanged: renderControls });
+const home = initHome({ state, byId, element, persist, announce, localDay, formatDay, emotionFor, scores });
 window.addEventListener('pagehide', () => voice.cancel());
 window.addEventListener('hashchange', () => showView(true));
 renderProgress();

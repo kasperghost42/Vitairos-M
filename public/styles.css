@@ -444,10 +444,33 @@ dialog::backdrop { background: #0e2e30a1; }
 .pane { padding: clamp(15px, 2vw, 24px); }
 .pane > p, .pane > form > p { color: var(--muted); line-height: 1.5; margin: 8px 0 14px; }
 .pane-heading { display: flex; align-items: start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.checkin-scale { display: grid; gap: 8px; border: 0; margin: 0 0 16px; padding: 0; }
-.checkin-scale legend { margin-bottom: 8px; font-weight: 700; }
-.checkin-scale label { background: var(--ice); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
-.checkin-scale input { accent-color: var(--cyan); margin-right: 5px; }
+.emotion-picker { display: flex; justify-content: center; align-items: center; gap: clamp(16px, 3vw, 36px); padding: 18px 0 26px; }
+.emotion-preview { display: grid; justify-items: center; gap: 14px; width: 116px; flex-shrink: 0; text-align: center; }
+.emotion-emoji { display: grid; place-items: center; width: 100px; height: 100px; font-size: 3.5rem; line-height: 1; border: 1px solid var(--personal-line); border-radius: 24px; background: linear-gradient(145deg, #fff, #edf9f8); box-shadow: 0 8px 24px #205a7010; }
+.emotion-preview output { color: var(--personal-teal); font-weight: 750; font-size: 1.05rem; }
+.emotion-thermometer { display: flex; gap: 13px; height: 300px; }
+#emotion-value { appearance: none; -webkit-appearance: none; writing-mode: vertical-lr; direction: rtl; width: 34px; height: 300px; margin: 0; padding: 0; background: transparent; cursor: pointer; border-radius: 999px; }
+#emotion-value::-webkit-slider-runnable-track { width: 24px; height: 100%; border-radius: 999px; background: linear-gradient(to top, #ee8b9c, #f5b199 25%, #f2d78f 48%, #a5cf96 72%, #28a994); }
+#emotion-value::-moz-range-track { width: 24px; height: 100%; border-radius: 999px; background: linear-gradient(to top, #ee8b9c, #f5b199 25%, #f2d78f 48%, #a5cf96 72%, #28a994); }
+#emotion-value::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 34px; height: 34px; margin-left: -5px; border: 8px solid white; border-radius: 50%; background: var(--personal-teal); box-shadow: 0 0 0 2px #3998a5, 0 3px 10px #103d4633; }
+#emotion-value::-moz-range-thumb { box-sizing: border-box; width: 34px; height: 34px; border: 8px solid white; border-radius: 50%; background: var(--personal-teal); box-shadow: 0 0 0 2px #3998a5, 0 3px 10px #103d4633; }
+.emotion-labels { display: flex; flex-direction: column; justify-content: space-between; }
+.emotion-labels button { display: flex; align-items: center; gap: 7px; min-height: 36px; padding: 5px 8px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: var(--muted); text-align: left; font-size: .88rem; white-space: nowrap; }
+.emotion-labels button:hover { background: var(--ice); }
+.emotion-labels button[aria-pressed="true"] { color: var(--personal-teal); background: #e5f5f4; border-color: #b9deda; font-weight: 700; }
+.emotion-comment-label { display: block; margin-bottom: 9px; color: var(--personal-ink); font-weight: 700; }
+#emotion-comment { display: block; width: 100%; min-height: 96px; padding: 12px; border: 1px solid #a8c4cc; border-radius: 10px; background: #fcfefe; color: inherit; font: inherit; line-height: 1.5; resize: vertical; }
+#emotion-comment::placeholder { color: var(--muted); }
+.emotion-save { width: 100%; margin-top: 16px; }
+.checkin-comment { flex-basis: 100%; margin: 0; color: var(--muted); line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 400px) {
+  .emotion-picker { gap: 12px; }
+  .emotion-preview { width: 92px; }
+  .emotion-emoji { width: 80px; height: 80px; font-size: 3rem; }
+  .emotion-preview output { font-size: .95rem; }
+  .emotion-thermometer { gap: 7px; }
+  .emotion-labels button { padding-inline: 5px; font-size: .82rem; }
+}
 .plain-list { list-style: none; margin: 0; padding: 0; }
 .checkin-row, .history-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
 .checkin-row progress { flex-basis: 100%; width: 100%; height: 9px; accent-color: var(--cyan); }
@@ -563,13 +586,6 @@ dialog::backdrop { background: #0e2e30a1; }
 .personal .personal-actions .pane:first-child { background: linear-gradient(138deg, #fff, #e6f7f4); }
 .personal .personal-actions .pane:last-child { background: linear-gradient(138deg, #fff, #e7f5fa); }
 .personal .personal-actions .button { margin-top: auto; }
-.personal .checkin-scale label { border: 1px solid transparent; }
-.personal .checkin-scale label:hover { border-color: #aad3dc; }
-.personal .checkin-scale label:has(input:checked) {
-  border-color: #63aebb;
-  background: #d9f1f3;
-  font-weight: 650;
-}
 .personal .chat-pane { max-width: 100%; }
 .personal .chat-note, .personal #empty-chat {
   padding: 12px 14px;
@@ -580,6 +596,72 @@ dialog::backdrop { background: #0e2e30a1; }
 .personal .chat-log li.chat-assistant { background: #edf7fa; }
 .personal .chat-log li.chat-user { background: #d6eeef; }
 .personal .voice-panel { background: #f4fbfc; }
+
+.home-cards .pane { gap: 10px; }
+.home-cards .pane > p { margin: 0 0 8px; }
+.home-cards .pane > .button { width: 100%; }
+.home-card-icon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 1.35rem; }
+.home-stats { width: 100%; margin: 6px 0 14px; }
+.home-stats > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-block: 6px; }
+.home-stats dt { color: var(--muted); font-size: .88rem; }
+.home-stats dd { color: var(--personal-ink); font-weight: 700; text-align: right; }
+.home-trophies { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.home-trophies:empty { display: none; }
+.home-trophies span { display: grid; place-items: center; width: 37px; height: 37px; background: #fff9eb; border: 1px solid #ece2c8; border-radius: 11px; font-size: 1.2rem; }
+.section-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.section-heading p { margin-top: 6px; line-height: 1.5; }
+.section-space { margin-top: 20px; }
+.daily-tip { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.daily-tip > p { margin: 0 0 8px; }
+.daily-tip .button { margin-top: auto; }
+.daily-tip .button:disabled { cursor: default; opacity: 1; background: #e7f6ef; color: #24684f; border-color: #c8e7d5; }
+.personal-form { display: grid; align-content: start; gap: 10px; }
+.personal-form h2 { margin-bottom: 7px; }
+.personal-form label { font-weight: 650; color: var(--personal-ink); }
+.personal-form :is(input, select) { min-width: 0; width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #a8c4cc; border-radius: 9px; font: inherit; background: #fcfefe; color: inherit; }
+.personal-form .button { margin-top: 6px; }
+.appointment-entry, .personal-note { padding-block: 15px; border-top: 1px solid var(--border); }
+.appointment-entry p, .personal-note p { margin-block: 6px 10px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; white-space: pre-wrap; }
+.appointment-entry h3 { overflow-wrap: anywhere; }
+.achievement-level { background: linear-gradient(135deg, #fff, #e8f7f5); }
+.level-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-block: 20px 12px; color: var(--personal-teal); }
+.level-line strong { font-size: 2rem; letter-spacing: -.04em; }
+.level-line span { font-weight: 700; }
+.personal :is(.achievement-overview, .achievement-goal) progress { display: block; width: 100%; height: 10px; accent-color: var(--cyan); border: 0; border-radius: 999px; overflow: hidden; background: var(--ice); }
+.personal progress::-webkit-progress-bar { background: var(--ice); border-radius: 999px; }
+.personal progress::-webkit-progress-value { background: #2896a5; border-radius: 999px; }
+.personal progress::-moz-progress-bar { background: #2896a5; border-radius: 999px; }
+.achievement-level .achievement-note { font-size: .85rem; padding-top: 10px; border-top: 1px solid var(--personal-line); }
+.weekly-summary { display: flex; align-items: center; gap: 20px; }
+.weekly-ring { --weekly-progress: 0%; display: grid; place-items: center; width: 100px; height: 100px; flex: 0 0 auto; border-radius: 50%; background: conic-gradient(#2896a5 var(--weekly-progress), #e5eff1 0); }
+.weekly-ring strong { display: grid; place-items: center; width: 78px; height: 78px; border-radius: 50%; background: white; font-size: 1.4rem; color: var(--personal-ink); }
+.achievement-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.achievement-filters .button { border-radius: 999px; }
+.achievement-filters [aria-pressed="true"] { background: var(--personal-teal); border-color: var(--personal-teal); color: white; }
+.trophy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 16px; margin: 20px 0 0; padding: 0; list-style: none; }
+.trophy { display: flex; flex-direction: column; align-items: center; gap: 9px; text-align: center; }
+.trophy-icon { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 18px; border: 1px solid #dae5e8; background: #edf2f4; font-size: 1.8rem; filter: grayscale(1); opacity: .65; }
+.trophy.earned .trophy-icon { background: linear-gradient(145deg, #fffdf7, #fcf0cb); border-color: #e7d8ad; filter: none; opacity: 1; }
+.trophy strong { color: var(--personal-ink); font-size: .88rem; line-height: 1.4; }
+.trophy small { color: var(--muted); font-size: .78rem; }
+.goal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.achievement-goal { min-width: 0; padding: 17px; border: 1px solid var(--personal-line); border-radius: 13px; background: #fcfefe; }
+.achievement-goal > p { margin-block: 8px 10px; color: var(--muted); font-size: .88rem; }
+.achievement-goal details { margin-top: 14px; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+.achievement-goal summary { cursor: pointer; color: var(--personal-teal); font-weight: 650; }
+.achievement-goal details p { margin-top: 7px; }
+.achievement-goal > .button { margin-top: 12px; }
+@media (max-width: 1050px) and (min-width: 721px) {
+  .weekly-summary { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
+@media (max-width: 540px) {
+  .goal-grid { grid-template-columns: 1fr; }
+  .weekly-summary { gap: 12px; }
+  .weekly-ring { width: 80px; height: 80px; }
+  .weekly-ring strong { width: 62px; height: 62px; font-size: 1.1rem; }
+  .weekly-summary .home-stats dt { font-size: .8rem; }
+  .trophy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 @keyframes personal-card-in {
   from { opacity: .6; translate: 0 5px; }
