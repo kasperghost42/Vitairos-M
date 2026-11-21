@@ -11,7 +11,7 @@
 </head>
 <body>
   <a class="skip" href="#principal">Saltar al contenido</a>
-  <div class="workspace">
+  <div class="workspace professional">
     <aside class="sidebar">
       <a class="brand" href="/" aria-label="VITAIROS-M, inicio">
       <img class="official-logo" src="/vitairos-m-logo.png" width="574" height="166" alt="VITAIROS-M · Salud mental digital">
@@ -21,6 +21,7 @@
         <a href="/panel" aria-current="page"><span class="nav-icon" aria-hidden="true">▦</span>Resumen</a>
         <a href="#agenda"><span class="nav-icon" aria-hidden="true">▤</span>Agenda</a>
         <button type="button" data-dialog="availability"><span class="nav-icon" aria-hidden="true">◷</span>Disponibilidad</button>
+        <button type="button" data-dialog="license"><span class="nav-icon" aria-hidden="true">✓</span>Credencial</button>
         <a href="#ingresos"><span class="nav-icon" aria-hidden="true">▥</span>Ingresos</a>
       </nav>
       <a class="about-link" href="/#pruebas"><span class="nav-icon" aria-hidden="true">ⓘ</span>Volver a las pruebas</a>
@@ -30,6 +31,7 @@
       <header class="topbar">
         <span>VITAIROS-M <span class="top-divider">/</span> Panel profesional</span>
         <div class="top-right">
+          <button class="button secondary" type="button" data-dialog="earnings-summary">Ver ganancias</button>
           <span class="demo-badge">Entorno de prueba</span>
           <span class="avatar profile" title="Perfil profesional de demostración" aria-label="Perfil profesional de demostración">CM</span>
         </div>
@@ -39,13 +41,13 @@
         <section class="welcome" aria-labelledby="title">
           <div>
             <p class="date" id="today-label"></p>
-            <h1 id="title">Hola, Camila</h1>
+            <h1 id="title" tabindex="-1">Hola, Camila</h1>
             <p class="muted">Revisa tus próximas sesiones y prepara tu jornada.</p>
           </div>
           <button type="button" class="button primary" data-dialog="availability"><span aria-hidden="true">＋</span> Cargar disponibilidad</button>
         </section>
 
-        <section class="metrics" aria-label="Resumen de actividad">
+        <section class="metrics professional-metrics" aria-label="Resumen de actividad">
           <article class="card metric">
             <div><p>Personas activas</p><strong id="active-count"></strong><small>En los próximos siete días</small></div>
             <span class="metric-icon mint" aria-hidden="true">◎</span>
@@ -58,6 +60,7 @@
             <div><p>Horarios disponibles</p><strong id="availability-count"></strong><small>Franjas en la semana de prueba</small></div>
             <span class="metric-icon gold" aria-hidden="true">◷</span>
           </article>
+          <article class="card metric"><div><p>Racha sin ausencias</p><strong id="attendance-streak"></strong><small>Objetivo: 30 días · Datos simulados</small></div><span class="metric-icon mint" aria-hidden="true">☆</span></article>
         </section>
 
         <div class="dashboard-grid">
@@ -75,13 +78,14 @@
                 <tbody id="appointments"></tbody>
               </table>
             </div>
+            <div class="agenda-bottom"><button class="button secondary" type="button" data-dialog="full-agenda">Ver agenda completa</button></div>
           </section>
 
           <section class="card alerts" aria-labelledby="alerts-title">
             <div class="card-heading"><div><h2 id="alerts-title">Alertas</h2><p>Pendientes de tu espacio.</p></div></div>
-            <div class="notice gold">
+            <div class="notice gold" id="license-notice">
               <span class="notice-icon" aria-hidden="true">!</span>
-              <div><h3>Credencial profesional</h3><p id="license-alert"></p><button class="text-action" type="button" data-dialog="license">Revisar credencial</button></div>
+              <div><h3 id="license-alert-title">Credencial profesional</h3><p id="license-alert"></p><button class="text-action" type="button" data-dialog="license">Revisar credencial</button></div>
             </div>
             <div class="notice blue">
               <span class="notice-icon" aria-hidden="true">◷</span>
@@ -91,16 +95,13 @@
 
           <section class="card earnings" id="ingresos" aria-labelledby="earnings-title">
             <div class="card-heading">
-              <div><h2 id="earnings-title">Resumen de ingresos</h2><p>Importes de ejemplo en pesos chilenos.</p></div>
-              <strong class="earnings-total">$216.000</strong>
+              <div><h2 id="earnings-title">Ganancias de los últimos 12 días</h2><p>Importes simulados en pesos chilenos.</p></div>
+              <button class="button secondary" type="button" data-dialog="earnings-summary">Resumen y CSV</button>
             </div>
-            <dl class="income-chart" aria-label="Ingresos simulados de lunes a viernes">
-              <div style="--bar:64%"><dt>Lun</dt><dd>$36.000</dd></div>
-              <div style="--bar:86%"><dt>Mar</dt><dd>$48.000</dd></div>
-              <div style="--bar:43%"><dt>Mié</dt><dd>$24.000</dd></div>
-              <div style="--bar:96%"><dt>Jue</dt><dd>$54.000</dd></div>
-              <div style="--bar:96%"><dt>Vie</dt><dd>$54.000</dd></div>
-            </dl>
+            <p class="income-legend"><span>Monto diario</span><span>Objetivo diario: $90.000</span></p>
+            <div id="professional-income-chart" class="professional-income-chart"></div>
+            <dl class="income-totals" id="income-totals"></dl>
+            <details class="income-data-table"><summary>Ver datos de los últimos 12 días</summary><div class="table-wrapper"><table><thead><tr><th scope="col">Fecha</th><th scope="col">Monto simulado</th></tr></thead><tbody id="income-data"></tbody></table></div></details>
           </section>
 
           <section class="card consent" aria-labelledby="consent-title">
@@ -133,24 +134,32 @@
       <button type="button" class="close" data-close aria-label="Cerrar">×</button>
     </div>
     <dl class="details"><div><dt>Profesión</dt><dd>Psicóloga</dd></div><div><dt>Vigencia</dt><dd id="license-date"></dd></div></dl>
-    <p class="muted">La renovación de credenciales queda fuera de esta demostración.</p>
-    <div class="dialog-actions"><button type="button" class="button primary" data-close>Entendido</button></div>
+    <form id="license-form" class="personal-form"><label for="license-number">Número de registro ficticio</label><input id="license-number" name="number" required maxlength="40" placeholder="Ej.: DEMO-2026"><label for="license-expiry">Nueva fecha de vigencia</label><input id="license-expiry" name="expiry" type="date" required><p class="muted">Se actualiza solo esta demostración. No valida ni renueva una licencia oficial.</p><button class="button primary" type="submit">Guardar credencial de prueba</button></form>
   </dialog>
 
-  <dialog id="profile" class="compact" aria-labelledby="profile-title">
+  <dialog id="profile" class="profile-drawer" aria-labelledby="profile-title">
     <div class="dialog-heading">
       <div><h2 id="profile-title"></h2><p class="muted">Ficha de demostración</p></div>
       <button type="button" class="close" data-close aria-label="Cerrar">×</button>
     </div>
     <dl class="details">
+      <div><dt>Edad</dt><dd id="profile-age"></dd></div>
+      <div><dt>Último estado emocional</dt><dd id="profile-emotion"></dd></div>
       <div><dt>Horario</dt><dd id="profile-date"></dd></div>
       <div><dt>Estado</dt><dd id="profile-state"></dd></div>
       <div><dt>Modalidad</dt><dd>En línea</dd></div>
     </dl>
     <h3>Contexto autorizado</h3>
     <p id="profile-context" class="muted"></p>
-    <div class="dialog-actions"><button type="button" class="button secondary" data-close>Cerrar ficha</button></div>
+    <h3 class="section-space">Objetivos</h3><ul id="profile-goals" class="profile-goals"></ul>
+    <form id="profile-note-form" class="personal-form section-space"><label for="profile-note">Notas profesionales de prueba</label><textarea id="profile-note" name="note" rows="4" maxlength="1200" placeholder="Utiliza solo situaciones y datos ficticios."></textarea><button class="button secondary" type="submit">Guardar nota</button></form>
+    <div class="entry-actions section-space"><button class="button primary" type="button" id="start-session">Iniciar sesión de prueba</button><button class="button secondary" type="button" id="show-patient-history" aria-expanded="false" aria-controls="patient-history">Ver historial</button></div>
+    <section id="patient-history" class="section-space" hidden><h3>Historial de sesiones</h3><ul id="patient-history-list" class="plain-list"></ul></section>
+    <div class="dialog-actions"><button type="button" class="button danger" id="profile-cancel">Cancelar próxima cita</button><button type="button" class="button secondary" data-close>Cerrar ficha</button></div>
   </dialog>
+  <dialog id="earnings-summary" aria-labelledby="earnings-summary-title"><div class="dialog-heading"><div><h2 id="earnings-summary-title">Resumen de ganancias</h2><p class="muted">Montos simulados. No representan pagos reales.</p></div><button type="button" class="close" data-close aria-label="Cerrar">×</button></div><dl class="details" id="earnings-details"></dl><p class="muted">El CSV incluye los importes diarios de los últimos 12 días, sin nombres ni notas de las personas.</p><div class="dialog-actions"><button class="button secondary" type="button" data-close>Cerrar</button><button class="button primary" type="button" id="download-income">Descargar CSV</button></div></dialog>
+  <dialog id="full-agenda" class="wide-dialog" aria-labelledby="full-agenda-title"><div class="dialog-heading"><div><h2 id="full-agenda-title">Agenda completa</h2><p class="muted">Citas ficticias de este perfil profesional.</p></div><button type="button" class="close" data-close aria-label="Cerrar">×</button></div><div class="agenda-search"><label for="agenda-search">Buscar persona</label><input id="agenda-search" type="search" placeholder="Nombre de prueba"><label for="agenda-status">Estado</label><select id="agenda-status"><option value="all">Todos</option><option value="pending">Pendiente</option><option value="confirmed">Confirmada</option><option value="completed">Realizada</option><option value="canceled">Cancelada</option></select></div><ul id="full-agenda-list" class="plain-list"></ul><p id="agenda-no-results" hidden>No hay citas que coincidan con estos filtros.</p></dialog>
+  <dialog id="session" aria-labelledby="session-title"><div class="dialog-heading"><div><h2 id="session-title">Sesión de prueba</h2><p class="muted" id="session-person"></p></div><button class="close" type="button" data-close aria-label="Cerrar">×</button></div><p class="chat-note section-space">Este espacio simula el registro de una sesión. No inicia una videollamada ni contacta a ninguna persona.</p><form id="session-form" class="personal-form section-space"><label for="session-note">Nota de la sesión ficticia</label><textarea id="session-note" required maxlength="1200" rows="4" placeholder="Escribe una nota de prueba."></textarea><button class="button primary" type="submit">Finalizar y guardar sesión de prueba</button></form></dialog>
 
   <dialog id="cancel" class="compact" aria-labelledby="cancel-title">
     <div class="dialog-heading">

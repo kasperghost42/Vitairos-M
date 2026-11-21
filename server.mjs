@@ -17,6 +17,7 @@ const pages = new Map([
   ['/persona', ['persona.html', 'text/html']],
   ['/styles.css', ['styles.css', 'text/css']],
   ['/app.js', ['app.js', 'text/javascript']],
+  ['/professional-model.js', ['professional-model.js', 'text/javascript']],
   ['/persona.js', ['persona.js', 'text/javascript']],
   ['/insights.js', ['insights.js', 'text/javascript']],
   ['/home.js', ['home.js', 'text/javascript']],

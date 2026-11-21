@@ -24,6 +24,8 @@ Los consejos se renuevan cada día y pueden marcarse como hechos. Logros incluye
 
 La agenda personal permite anotar citas ficticias y marcar como asistidas las que ya pasaron. No realiza reservas, envía avisos ni se sincroniza con el panel profesional. Los datos de consejos, agenda y logros también se guardan en el mismo perfil local.
 
+El panel profesional incluye disponibilidad semanal, actualización de credencial ficticia, agenda completa con búsqueda y filtros, y fichas laterales con edad, estado emocional autorizado, objetivos, notas e historial. Las sesiones de prueba pueden finalizarse para actualizar el historial, la racha simulada y los importes de ejemplo. El resumen de ganancias muestra los últimos doce días y permite descargar un CSV sin información personal. Los horarios, credenciales, notas y estados se conservan en el navegador; no se envían reservas, validaciones oficiales, videollamadas ni pagos.
+
 ## Activar un proveedor de chat
 
 El chat inicia en modo `demo`, con respuestas de ejemplo generadas localmente. Para probar una API, copia `.env.example` a `.env` en la raíz del proyecto e indica el proveedor y la clave. Git ignora `.env`.
