@@ -301,9 +301,14 @@ byId('chat-form').addEventListener('submit', async (event) => {
 
 async function loadChatConfig() {
   try {
-    const response = await fetch('/api/chat/config');
+    const response = await fetch('/api/chat/config', { cache: 'no-store' });
     if (!response.ok) throw new Error('No se pudo leer la configuración.');
     config = await response.json();
+    const signIn = byId('chat-sign-in');
+    if (config.signInPath) {
+      signIn.href = config.signInPath;
+      signIn.hidden = false;
+    }
     voice.setup(config.voiceReady);
     const consent = byId('external-consent');
     byId('consent-label').hidden = !config.external || !config.ready;

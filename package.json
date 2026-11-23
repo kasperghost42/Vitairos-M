@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
+    "build:sites": "node worker/build.mjs",
     "test": "node --test",
     "check": "node --check server.mjs && node --check chat.mjs && node --check transcription.mjs && node --check public/app.js && node --check public/persona.js && node --check public/voice.js && node --check public/home.js && node --check public/insights.js && node --check public/professional-model.js"
   },

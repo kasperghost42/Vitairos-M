@@ -56,6 +56,12 @@ Con Groq activo, el chatbot permite dictar mensajes. Autoriza el audio de prueba
 
 El prototipo está pensado para pruebas en localhost. Antes de usar cuentas o datos reales harían falta autenticación, almacenamiento seguro y revisión clínica y de privacidad.
 
+## Demo pública en Sites
+
+La [demo de VITAIROS-M](https://vitairos-m-demo.mellowcurlew8.chatgpt.site/) usa las mismas páginas de `public/`. Para preparar su Worker ejecuta `npm run build:sites`. El resultado queda en `dist/` y se publica desde Sites.
+
+Configura `CHAT_PROVIDER=groq` y el secreto `GROQ_API_KEY` en Sites. El chat alojado requiere iniciar sesión con ChatGPT para enviar mensajes ficticios a Groq. Los visitantes sin sesión pueden usar las respuestas de ejemplo. El dictado por micrófono se prueba en el servidor local.
+
 ## Referencias
 
 - [VITAIROS-M](https://www.vitairos.com/vitairos-m/)
