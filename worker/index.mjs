@@ -128,7 +128,7 @@ export default {
     }
     if (pathname === '/api/chat') return chat(request, env, signedIn, groqReady);
     if (!['GET', 'HEAD'].includes(request.method)) return new Response(null, { status: 405, headers: { Allow: 'GET, HEAD' } });
-    const route = { '/': '/index.html', '/persona': '/persona.html', '/panel': '/panel.html', '/experiencia': '/index.html' };
+    const route = { '/': '/index.html', '/persona': '/persona.html', '/panel': '/panel.html', '/empresa': '/empresa.html', '/experiencia': '/index.html' };
     const asset = assets[Object.hasOwn(route, pathname) ? route[pathname] : pathname];
     if (!asset) return new Response('Página no encontrada', { status: 404 });
     const [type, content] = asset;

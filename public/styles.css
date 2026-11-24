@@ -879,3 +879,21 @@ dialog::backdrop { background: #0e2e30a1; }
   .personal .topbar .button { font-size: .8rem; padding-inline: 7px; }
   .personal .topbar > span { line-height: 1.3; }
 }
+.company { max-width: 1080px; }
+.company-form { display: grid; gap: 13px; align-content: start; }
+.company-form > p { margin: 0; }
+.company-form label { display: grid; gap: 6px; font-weight: 650; }
+.company-form select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 11px;
+  border: 1px solid #b9d8df;
+  border-radius: 8px;
+  background: #f7fcfd;
+  color: inherit;
+  font: inherit;
+}
+.company-form .button { justify-self: start; }
+.company-summary { background: linear-gradient(140deg, #fff, #edf8fa); }
+.company-summary dd { overflow-wrap: anywhere; }
+.company-privacy { margin-top: 16px; }

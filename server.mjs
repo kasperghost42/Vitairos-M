@@ -14,6 +14,8 @@ const pages = new Map([
   ['/', ['index.html', 'text/html']],
   ['/experiencia', ['index.html', 'text/html']],
   ['/panel', ['panel.html', 'text/html']],
+  ['/empresa', ['empresa.html', 'text/html']],
+  ['/empresa.js', ['empresa.js', 'text/javascript']],
   ['/persona', ['persona.html', 'text/html']],
   ['/styles.css', ['styles.css', 'text/css']],
   ['/app.js', ['app.js', 'text/javascript']],

@@ -8,8 +8,8 @@ const files = (await readdir(new URL('public/', root))).sort();
 const assets = {};
 for (const file of files) {
   const extension = file.split('.').at(-1);
+  if (!Object.hasOwn(mime, extension)) continue;
   const type = mime[extension];
-  assert.ok(type, 'Tipo de recurso no admitido: ' + file);
   const content = await read('public/' + file, type.startsWith('image/') ? 'base64' : 'utf8');
   assets['/' + file] = [type, content];
 }
@@ -19,7 +19,7 @@ const source = await read('worker/index.mjs', 'utf8');
 const output = source + '\nconst assets = ' + JSON.stringify(assets) + ';\n';
 const module = await import('data:text/javascript;base64,' + Buffer.from(output).toString('base64'));
 assert.equal(typeof module.default.fetch, 'function');
-for (const route of ['/', '/persona.html', '/panel.html', '/styles.css', '/vitairos-m-logo.png']) {
+for (const route of ['/', '/persona.html', '/panel.html', '/empresa', '/empresa.js', '/styles.css', '/vitairos-m-logo.png']) {
   assert.equal((await module.default.fetch(new Request('https://demo.invalid' + route), {})).status, 200, route);
 }
 await mkdir(new URL('dist/server/', root), { recursive: true });

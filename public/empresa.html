@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prepara un piloto de VITAIROS-M para tu organización.">
+  <title>Espacio empresa · VITAIROS-M</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/empresa.js"></script>
+</head>
+<body>
+  <a class="skip" href="#principal">Saltar al contenido</a>
+  <header class="experience-nav">
+    <a class="brand" href="/" aria-label="VITAIROS-M, inicio"><img class="official-logo" src="/vitairos-m-logo.png" width="574" height="166" alt="VITAIROS-M · Salud mental digital"></a>
+    <nav aria-label="Espacio empresa">
+      <a href="/#pruebas">Volver a los perfiles</a>
+      <a href="#piloto">Preparar un piloto</a>
+    </nav>
+  </header>
+  <main class="dashboard company" id="principal">
+    <section class="welcome">
+      <div>
+        <p class="date">Entorno de prueba</p>
+        <h1>Espacio empresa</h1>
+        <p class="muted">Define el alcance de un piloto de bienestar para tu comunidad.</p>
+      </div>
+    </section>
+    <div class="personal-grid">
+      <form class="card pane company-form" id="piloto">
+        <h2>Preparar un piloto</h2>
+        <p>Usa datos ficticios para explorar el flujo.</p>
+        <label>Tipo de organización
+          <select name="organization" required>
+            <option value="">Selecciona una opción</option>
+            <option>Empresa</option><option>Institución educativa</option><option>Organización comunitaria</option>
+          </select>
+        </label>
+        <label>Tamaño de la comunidad
+          <select name="size" required>
+            <option value="">Selecciona un rango</option>
+            <option>Hasta 50 personas</option><option>De 51 a 250 personas</option><option>Más de 250 personas</option>
+          </select>
+        </label>
+        <label>Objetivo del piloto
+          <select name="objective" required>
+            <option value="">Selecciona un objetivo</option>
+            <option>Facilitar el acceso a orientación</option><option>Explorar una red de apoyo profesional</option><option>Evaluar la participación en un piloto</option>
+          </select>
+        </label>
+        <button class="button primary" type="submit">Preparar resumen</button>
+      </form>
+      <section class="card pane company-summary" aria-labelledby="summary-title">
+        <h2 id="summary-title">Resumen del piloto</h2>
+        <p id="pilot-status" role="status">Completa el alcance para generar un resumen en esta página.</p>
+        <dl class="details" id="pilot-summary" hidden>
+          <div><dt>Organización</dt><dd id="pilot-organization"></dd></div>
+          <div><dt>Comunidad</dt><dd id="pilot-size"></dd></div>
+          <div><dt>Objetivo</dt><dd id="pilot-objective"></dd></div>
+        </dl>
+        <p>Revisa el alcance antes de volver a los perfiles de prueba.</p>
+        <a class="button secondary" href="/#pruebas">Ver los otros perfiles</a>
+      </section>
+    </div>
+    <section class="card pane company-privacy">
+      <h2>Privacidad de la comunidad</h2>
+      <p>El piloto institucional se plantea para explorar el acceso y la participación. La información individual de bienestar y las conversaciones pertenecen al espacio personal.</p>
+    </section>
+    <footer class="dashboard-footer"><span>VITAIROS-M</span><span>Prototipo para usar con datos ficticios.</span></footer>
+  </main>
+</body>
+</html>
